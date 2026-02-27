@@ -48,6 +48,6 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 
-  gem 'dotenv-rails', groups: [:development, :test]
-  gem 'bcrypt', '~> 3.1.18'
+  gem "dotenv-rails", groups: [ :development, :test ]
+  gem "bcrypt", "~> 3.1.18"
 end
