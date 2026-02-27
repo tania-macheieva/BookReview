@@ -86,7 +86,7 @@ GEM
     bigdecimal (4.0.1)
     bootsnap (1.23.0)
       msgpack (~> 1.2)
-    brakeman (8.0.2)
+    brakeman (8.0.4)
       racc
     builder (3.3.0)
     bundler-audit (0.9.3)
@@ -381,6 +381,9 @@ DEPENDENCIES
   solid_queue
   thruster
   tzinfo-data
+
+RUBY VERSION
+   ruby 3.2.3p157
 
 BUNDLED WITH
    2.6.7
