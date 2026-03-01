@@ -1,5 +1,5 @@
 class ReviewsController < ApplicationController
-  before_action :set_review, only: [ :show, :update, :destroy ]
+  before_action :set_review, only: [ :update, :destroy ]
   before_action :set_book, only: [ :index, :create ]
 
   def index
@@ -36,6 +36,10 @@ class ReviewsController < ApplicationController
     @review = Review.find(params[:id])
   end
 
+  def set_book
+    @book = Book.find(params[:book_id])
+  end
+  
   def review_params
     params.require(:review).permit(:rating, :comment)
   end
