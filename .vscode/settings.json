@@ -1,0 +1,6 @@
+{
+	"github.copilot.chat.codeGeneration.useInstructionFiles": false,
+	"github.copilot.enable": {
+		"ruby": false
+	}
+}
