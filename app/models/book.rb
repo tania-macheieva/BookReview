@@ -3,16 +3,16 @@ class Book < ApplicationRecord
 
   def as_json(options = {})
     super(
-      only: [ :id, :title, :author, :description ],
-      methods: [ :average_rating, :reviews_count ],
+      only: [:id, :title, :author, :description],
+      methods: [:average_rating, :reviews_count],
       include: {
         reviews: {
-          only: [ :id, :rating, :comment ],
+          only: [:id, :rating, :comment],
           include: {
-            user: { only: [ :id, :username ] }
-          }
-        }
-      }
+            user: { only: [:id, :username] },
+          },
+        },
+      },
     )
   end
 

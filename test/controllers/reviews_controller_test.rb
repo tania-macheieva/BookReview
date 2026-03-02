@@ -14,16 +14,16 @@ class ReviewsControllerTest < ActionDispatch::IntegrationTest
   test "should create review" do
     assert_difference("Review.count") do
       post book_reviews_url(@book), params: {
-        review: { rating: 5, comment: "Great!" }
-      }
+                                 review: { rating: 5, comment: "Great!" },
+                               }
     end
     assert_response :created
   end
 
   test "should update review" do
     patch review_url(@review), params: {
-      review: { rating: 4, comment: "Actually, it was okay." }
-    }, as: :json
+                           review: { rating: 4, comment: "Actually, it was okay." },
+                         }, as: :json
     assert_response :success
   end
 
