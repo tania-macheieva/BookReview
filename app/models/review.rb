@@ -4,10 +4,15 @@ class Review < ApplicationRecord
 
   validates :rating,
             presence: true,
-            numericality: { greater_than_or_equal_to: 1,
+            numericality: { only_integer: true,
+                            greater_than_or_equal_to: 1,
                             less_than_or_equal_to: 5 }
 
-  validates :user_id,
-            uniqueness: { scope: :book_id,
-                          message: "already reviewed this book" }
+  validate :no_duplicate_review
+
+  def no_duplicate_review
+    if Review.exists?(book_id: book_id, user_id: user_id, rating: rating, comment: comment)
+      errors.add(:base, "Duplicate review for this book")
+    end
+  end
 end
