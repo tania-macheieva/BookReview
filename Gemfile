@@ -24,3 +24,5 @@ group :development, :test do
   gem "rubocop-rails-omakase", require: false
   gem "dotenv-rails"
 end
+
+gem "pg_search", "~> 2.3"

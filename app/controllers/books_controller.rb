@@ -5,6 +5,9 @@ class BooksController < ApplicationController
     page = params[:page].to_i > 0 ? params[:page].to_i : 1
     per_page = params[:per_page].to_i > 0 ? params[:per_page].to_i : 10
     books = Book.offset((page - 1) * per_page).limit(per_page)
+
+    books = Book.search_by_title_and_author(params[:search]) if params[:search] if params[:search].present?
+
     render json: books
   end
 
