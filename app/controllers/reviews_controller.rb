@@ -8,9 +8,8 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    # review.user = current_user
     @review = @book.reviews.build(review_params)
-    @review.user_id = 1
+    @review.user = current_user
     if @review.save
       render json: @review, status: :created
     else
