@@ -5,5 +5,5 @@ Rails.application.routes.draw do
     resources :reviews, only: [:index, :create, :update, :destroy], shallow: true
   end
 
-  get "up" => "rails/health#show", as: :rails_health_check
+  post "/login", to: "auth#login"
 end
