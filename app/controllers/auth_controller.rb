@@ -1,7 +1,7 @@
 class AuthController < ApplicationController
   def login
     user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
+    if user&.authenticate(params[:password])
       token = JwtService.encode(user_id: user.id)
       render json: { token: token }
     else
