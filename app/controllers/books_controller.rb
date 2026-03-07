@@ -5,13 +5,13 @@ class BooksController < ApplicationController
 
   # GET /books
   def index
-    cache_key = "books_index_#{params[:page]}_#{params[:per_page]}_#{params[:search]}_#{params[:sortBy]}_#{params[:order]}"
+    cache_key = "books_index_v#{Book.maximum(:updated_at).to_i}_#{params[:page]}_#{params[:per_page]}_#{params[:search]}_#{params[:sortBy]}_#{params[:order]}"
     books = Rails.cache.fetch(cache_key, expires_in: 10.minutes) do
       BooksQuery.new(params).call.to_a
     end
 
     if stale?(books, last_modified: books.map(&:updated_at).max)
-      render json: books
+      render json: books.as_json(include: { reviews: { only: [:id, :rating, :comment], include: { user: { only: [:id, :username] } } } })
     end
   end
 
@@ -30,12 +30,12 @@ class BooksController < ApplicationController
   def create
     book = Book.new(book_params)
     book.user = current_user
-
     if book.save
+      @book = book
       clear_books_cache
       render json: book, status: :created
     else
-      render json: book.errors, status: :unprocessable_entity
+      render json: { errors: book.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -45,7 +45,7 @@ class BooksController < ApplicationController
       clear_books_cache
       render json: @book
     else
-      render json: @book.errors, status: :unprocessable_entity
+      render json: { errors: @book.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -69,10 +69,10 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit(:title, :author, :description)
+    params.require(:book).permit(:title, :description)
   end
 
   def authorize_book!
-    head :forbidden unless @book.user_id == current_user.id
+    return render(json: { error: "Forbidden" }, status: :forbidden) unless @book.user_id == current_user.id
   end
 end

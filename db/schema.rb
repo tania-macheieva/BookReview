@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_06_205225) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_07_103209) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -21,7 +21,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_06_205225) do
     t.text "description"
     t.string "title"
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
     t.index ["average_rating"], name: "index_books_on_average_rating"
+    t.index ["user_id"], name: "index_books_on_user_id"
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -43,6 +45,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_06_205225) do
     t.string "username"
   end
 
+  add_foreign_key "books", "users"
   add_foreign_key "reviews", "books"
   add_foreign_key "reviews", "users"
 end

@@ -20,34 +20,35 @@ class ReviewsController < ApplicationController
     @review.user = current_user
 
     if @review.save
-      clear_reviews_cache
+      clear_reviews_cache(@book.id)
       render json: @review, status: :created
     else
-      render json: @review.errors, status: :unprocessable_entity
+      render json: { errors: @review.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /reviews/:id
   def update
     if @review.update(review_params)
-      clear_reviews_cache
+      clear_reviews_cache(@review.book_id)
       render json: @review
     else
-      render json: @review.errors, status: :unprocessable_entity
+      render json: { errors: @review.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   # DELETE /reviews/:id
   def destroy
+    book_id = @review.book_id
     @review.destroy
-    clear_reviews_cache
+    clear_reviews_cache(book_id)
     head :no_content
   end
 
   private
 
-  def clear_reviews_cache
-    Rails.cache.delete("book_#{@book.id}_reviews")
+  def clear_reviews_cache(book_id)
+    Rails.cache.delete("book_#{book_id}_reviews")
   end
 
   def set_review
@@ -63,6 +64,6 @@ class ReviewsController < ApplicationController
   end
 
   def authorize_review!
-    head :forbidden unless @review.user_id == current_user.id
+    return render(json: { error: "Forbidden" }, status: :forbidden) unless @review.user_id == current_user.id
   end
 end
