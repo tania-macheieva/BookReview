@@ -1,35 +1,14 @@
 default: &default
-    adapter: postgresql
-    encoding: unicode
-    max_connections: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-    username: <%= ENV["POSTGRES_USER"] %>
-    password: <%= ENV["POSTGRES_PASSWORD"] %>
-    host: localhost
-    port: <%= ENV.fetch("POSTGRES_PORT", 5432) %>
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV['DATABASE_URL'] %> 
 
 development:
-    <<: *default
-    database: <%= ENV["POSTGRES_DB"] %>
+  <<: *default
 
 test:
-    <<: *default
-    database: <%= ENV["POSTGRES_DB"] %>_test
-#
+  <<: *default
+
 production:
-    primary: &primary_production
-        <<: *default
-        database: <%= ENV["POSTGRES_DB"] %>
-        username: <%= ENV["POSTGRES_USER"] %>
-        password: <%= ENV["POSTGRES_PASSWORD"] %>
-    cache:
-        <<: *primary_production
-        database: book_review_api_production_cache
-        migrations_paths: db/cache_migrate
-    queue:
-        <<: *primary_production
-        database: book_review_api_production_queue
-        migrations_paths: db/queue_migrate
-    cable:
-        <<: *primary_production
-        database: book_review_api_production_cable
-        migrations_paths: db/cable_migrate
+  <<: *default
