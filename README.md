@@ -25,9 +25,7 @@ The API supports authentication, pagination, sorting, caching, and rate limiting
 * PostgreSQL
 * Redis
 * Docker
-
----
-
+  
 ## Installation
 
 ## Clone the repository
@@ -68,7 +66,6 @@ The API will be available at:
 http://localhost:3000
 ```
 
----
 
 ## Database Schema
 
@@ -81,8 +78,6 @@ Relations:
 
 ## Database Diagram
 <img width="961" height="363" alt="image" src="https://github.com/user-attachments/assets/59f0b96e-0d51-4812-956b-3b6233ddc8b2" />
-
----
 
 ## API Endpoints
 
@@ -107,8 +102,6 @@ Response:
   "token": "jwt_token"
 }
 ```
-
----
 
 ## Books
 
@@ -162,7 +155,6 @@ Delete book
 DELETE /books/:id
 ```
 
----
 
 ## Reviews
 
@@ -180,8 +172,6 @@ Request body:
   "comment": "Great book"
 }
 ```
-
----
 
 ## Features
 
